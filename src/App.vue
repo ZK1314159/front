@@ -10,7 +10,10 @@
       <el-button>el-button</el-button>
       <br/>
       <br/>
-      <el-button @click="handleClick">send request to background</el-button>
+      <el-button @click="handleClick">send get request to background</el-button>
+      <br/>
+      <br/>
+      <el-button @click="handleClickForPost">send post request to background</el-button>
     </div>
     <HelloWorld msg="Welcome to Your Vue.js App"/>
   </div>
@@ -34,7 +37,9 @@ export default {
       axios.get('/test/get', {
           params: {
               userId: 20,
-              uidList: uidList
+              uidList: uidList,
+              price: 36.5,
+              judge: false
           }
       })
       .then(resp => {
@@ -51,6 +56,23 @@ export default {
           console.log("testBoolean:" + testBoolean);
           let character = resp.data.character;
           console.log("character:" + character);
+      }).catch(err => {
+          console.log('请求失败：' + err.status + ',' + err.statusText);
+      });
+    },
+    handleClickForPost() {
+      let uidArray = new Array();
+      uidArray[0] = 123;
+      uidArray[1] = 1234;
+      let uidList = uidArray.join(",");
+      axios.post('/test/post', {
+          userId: 20,
+          uidList: uidList,
+          price: 36.5,
+          judge: false
+      })
+      .then(resp => {
+          console.log(resp.data);
       }).catch(err => {
           console.log('请求失败：' + err.status + ',' + err.statusText);
       });
